@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stm_controller", "stm_controller\stm_controller.csproj", "{32C4A57B-6697-4AA2-81B9-235AAB60223D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stm32transLibrary", "stm32transLibrary\stm32transLibrary\stm32transLibrary.csproj", "{BF32680F-190C-4CEF-B02F-BC16FCCA917F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "stm32transLibrary", "stm32transLibrary\stm32transLibrary.csproj", "{BF32680F-190C-4CEF-B02F-BC16FCCA917F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{32C4A57B-6697-4AA2-81B9-235AAB60223D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{32C4A57B-6697-4AA2-81B9-235AAB60223D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{32C4A57B-6697-4AA2-81B9-235AAB60223D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{32C4A57B-6697-4AA2-81B9-235AAB60223D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF32680F-190C-4CEF-B02F-BC16FCCA917F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF32680F-190C-4CEF-B02F-BC16FCCA917F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF32680F-190C-4CEF-B02F-BC16FCCA917F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -26,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8A8F6234-78D9-43E4-87AE-086912E23075}
+		SolutionGuid = {99FF8D20-E724-4060-92D8-28791BEF1E75}
 	EndGlobalSection
 EndGlobal

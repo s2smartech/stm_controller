@@ -11,6 +11,7 @@ using System.Threading;
 using System.IO.Ports;
 using System.Timers;
 using System.IO;
+using stm32transLibrary;
 
 namespace stm_controller
 {
@@ -20,6 +21,8 @@ namespace stm_controller
         bool send_data_flag = false;    /*!< Data transmitted */
         int send_repeat_counter = 0;    /*!< Tx repeatition counter */
         System.IO.StreamReader in_file;
+
+        Stm32Library cal = new Stm32Library();
 
         static int errorCode;
         static string resp;
@@ -47,8 +50,6 @@ namespace stm_controller
         {
             Application.Run(new SplashScreen());
         }
-
-
 
         /**
          * @param 
@@ -95,58 +96,59 @@ namespace stm_controller
          */
         private void connect_Click(object sender, EventArgs e)
         {
+            cal.initializeSerialPort(serialPort1);
             /*Connect*/
-            if (!serialPort1.IsOpen)
-            {
-                if (Serial_port_config())
-                {
-                    //try
-                    //{
-                    serialPort1.Open();
-                    //}
-                    /*catch
-                    {
-                        alert("Can't open " + serialPort1.PortName + " port, it might be used in another program");
-                        return;
-                    }*/
+            //if (!serialPort1.IsOpen)
+            //{
+            //    if (Serial_port_config())
+            //    {
+            //        //try
+            //        //{
+            //        serialPort1.Open();
+            //        //}
+            //        /*catch
+            //        {
+            //            alert("Can't open " + serialPort1.PortName + " port, it might be used in another program");
+            //            return;
+            //        }*/
 
-                    /*if (datalogger_checkbox.Checked)
-                    {
-                        try
-                        {
-                            out_file = new System.IO.StreamWriter(datalogger_checkbox.Text, datalogger_append_radiobutton.Checked);
-                        }
-                        catch
-                        {
-                            alert("Can't open " + datalogger_checkbox.Text + " file, it might be used in another program");
-                            return;
-                        }
-                    }*/
+            //        /*if (datalogger_checkbox.Checked)
+            //        {
+            //            try
+            //            {
+            //                out_file = new System.IO.StreamWriter(datalogger_checkbox.Text, datalogger_append_radiobutton.Checked);
+            //            }
+            //            catch
+            //            {
+            //                alert("Can't open " + datalogger_checkbox.Text + " file, it might be used in another program");
+            //                return;
+            //            }
+            //        }*/
 
                     UserControl_state(true);
-                }
-            }
+            //    }
+            //}
 
-            /*Disconnect*/
-            else if (serialPort1.IsOpen)
-            {
-                try
-                {
-                    serialPort1.Close();
-                    serialPort1.DiscardInBuffer();
-                    serialPort1.DiscardOutBuffer();
-                }
-                catch {/*ignore*/}
+            ///*Disconnect*/
+            //else if (serialPort1.IsOpen)
+            //{
+            //    try
+            //    {
+            //        serialPort1.Close();
+            //        serialPort1.DiscardInBuffer();
+            //        serialPort1.DiscardOutBuffer();
+            //    }
+            //    catch {/*ignore*/}
 
-                //if (datalogger_checkbox.Checked)
-                //    try { out_file.Dispose(); }
-                //    catch {/*ignore*/ }
+            //    //if (datalogger_checkbox.Checked)
+            //    //    try { out_file.Dispose(); }
+            //    //    catch {/*ignore*/ }
 
-                //try { in_file.Dispose(); }
-                //catch {/*ignore*/ }
+            //    //try { in_file.Dispose(); }
+            //    //catch {/*ignore*/ }
 
-                UserControl_state(false);
-            }
+            //    UserControl_state(false);
+            //}
         }
 
         /**
@@ -218,35 +220,49 @@ namespace stm_controller
          */
         private void sendData_Click(object sender, EventArgs e)
         {
-            if (!send_data_flag)
+            string tx_data = "";
+            tx_data = tx_textarea.Text.Replace("\n", Environment.NewLine);
+            
+            try
             {
-                tx_repeater_delay.Interval = (int)send_delay.Value;
-                tx_repeater_delay.Start();
-
-                progressBar1.Maximum = (int)send_repeat.Value;
-                progressBar1.Visible = true;
-
-                send_data_flag = true;
-                tx_num_panel.Enabled = false;
-                tx_textarea.Enabled = false;
-                tx_radiobuttons_panel.Enabled = false;
-                sendData.Text = "Stop";
+                //storing the result in int i   
+                int i = cal.Add(10, tx_data);
+                //main_textBox_binary.AppendText(i.ToString());
             }
-            else
+
+            catch (Exception ex)
             {
-                tx_repeater_delay.Stop();
-                progressBar1.Value = 0;
-                send_repeat_counter = 0;
-                send_data_flag = false;
-                progressBar1.Visible = false;
-                tx_num_panel.Enabled = true;
-                tx_textarea.Enabled = true;
-                tx_radiobuttons_panel.Enabled = true;
-                sendData.Text = "Send";
-                /* if (write_form_file_radiobutton.Checked)
-                     try { in_file.Dispose(); }
-                     catch { }*/
+                MessageBox.Show(ex.Message);
             }
+            //if (!send_data_flag)
+            //{
+            //    tx_repeater_delay.Interval = (int)send_delay.Value;
+            //    tx_repeater_delay.Start();
+
+            //    progressBar1.Maximum = (int)send_repeat.Value;
+            //    progressBar1.Visible = true;
+
+            //    send_data_flag = true;
+            //    tx_num_panel.Enabled = false;
+            //    tx_textarea.Enabled = false;
+            //    tx_radiobuttons_panel.Enabled = false;
+            //    sendData.Text = "Stop";
+            //}
+            //else
+            //{
+            //    tx_repeater_delay.Stop();
+            //    progressBar1.Value = 0;
+            //    send_repeat_counter = 0;
+            //    send_data_flag = false;
+            //    progressBar1.Visible = false;
+            //    tx_num_panel.Enabled = true;
+            //    tx_textarea.Enabled = true;
+            //    tx_radiobuttons_panel.Enabled = true;
+            //    sendData.Text = "Send";
+            //    /* if (write_form_file_radiobutton.Checked)
+            //         try { in_file.Dispose(); }
+            //         catch { }*/
+            //}
         }
 
         private void fromFileSendData_Click(object sender, EventArgs e)
@@ -334,6 +350,7 @@ namespace stm_controller
         {
 
             string tx_data = "";
+
             if (send_word_radiobutton.Checked)
             {
                 main_textBox_binary.AppendText("in send_data\n");
